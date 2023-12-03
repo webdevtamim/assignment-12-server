@@ -28,7 +28,16 @@ async function run() {
         await client.connect();
 
 
+        // all jobs 
+        const mealCollection = client.db("mealsDB").collection("meals");
+
         
+
+        app.post('/meals', async (req, res) => {
+            const newMeals = req.body;
+            const result = await mealCollection.insertOne(newMeals);
+            res.send(result);
+        })
 
 
 
