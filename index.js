@@ -30,12 +30,25 @@ async function run() {
 
         // all jobs 
         const mealCollection = client.db("mealsDB").collection("meals");
+        const mealRequestCollection = client.db("mealsDB").collection("mealRequest");
 
-        
+        app.get('/meals', async (req, res) => {
+            const cursor = mealCollection.find()
+            const result = await cursor.toArray();
+            res.send(result);
+        })
 
         app.post('/meals', async (req, res) => {
             const newMeals = req.body;
             const result = await mealCollection.insertOne(newMeals);
+            res.send(result);
+        })
+
+        // mealRequestCollection
+
+        app.post('/mealRequest', async (req, res) => {
+            const newMeals = req.body;
+            const result = await mealRequestCollection.insertOne(newMeals);
             res.send(result);
         })
 
