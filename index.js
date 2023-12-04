@@ -31,6 +31,7 @@ async function run() {
         // all jobs 
         const mealCollection = client.db("mealsDB").collection("meals");
         const mealRequestCollection = client.db("mealsDB").collection("mealRequest");
+        const upcomingMealCollection = client.db("mealsDB").collection("upcomingMeal");
 
         app.get('/meals', async (req, res) => {
             const cursor = mealCollection.find()
@@ -49,6 +50,14 @@ async function run() {
         app.post('/mealRequest', async (req, res) => {
             const newMeals = req.body;
             const result = await mealRequestCollection.insertOne(newMeals);
+            res.send(result);
+        })
+
+        // upcomingMealCollection
+
+        app.get('/upcomingMeal', async (req, res) => {
+            const cursor = upcomingMealCollection.find()
+            const result = await cursor.toArray();
             res.send(result);
         })
 
